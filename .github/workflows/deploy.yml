@@ -15,15 +15,4 @@ jobs:
 
     - name: Deploy to Minikube
       run: |
-        kubectl get namespace x-road || kubectl create namespace x-road
-        kubectl get namespace monitoring || kubectl create namespace monitoring
-        kubectl apply -f deployments/xroad-deployment.yaml -n x-road
-        kubectl apply -f deployments/central-server-service.yaml -n x-road
-        kubectl apply -f deployments/transito-security-server-deployment.yaml -n x-road
-        kubectl apply -f deployments/transito-security-server-service.yaml -n x-road
-        kubectl apply -f deployments/tecnologia-security-server-deployment.yaml -n x-road
-        kubectl apply -f deployments/tecnologia-security-server-service.yaml -n x-road
-        kubectl apply -f deployments/dni-security-server-deployment.yaml -n x-road
-        kubectl apply -f deployments/dni-security-server-service.yaml -n x-road
-        kubectl apply -f deployments/prometheus-deployment.yaml -n monitoring
-        kubectl apply -f deployments/grafana-deployment.yaml -n monitoring
+
