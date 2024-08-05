@@ -7,21 +7,27 @@ on:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: self-hosted
 
     steps:
     - name: Checkout code
       uses: actions/checkout@v2
 
     - name: Set up K8s
-      uses: azure/setup-kubectl@v1
-      with:
-        version: 'latest'
+      run: |
+        curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
+        chmod +x ./kubectl
+        sudo mv ./kubectl /usr/local/bin/kubectl
 
     - name: Set up Minikube
-      uses: manusa/actions-setup-minikube@v2.4.0
-      with:
-        minikube version: 'latest'
+      run: |
+        curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
+        chmod +x minikube
+        sudo install minikube /usr/local/bin/
+
+    - name: Start Minikube
+      run: |
+        minikube start --kubernetes-version=v1.20.0
 
     - name: Deploy to Minikube
       run: |
