@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: transito-security-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: transito-security-server
+  template:
+    metadata:
+      labels:
+        app: transito-security-server
+    spec:
+      containers:
+      - name: transito-security-server
+        image: niis/xroad-security-server
+        ports:
+        - containerPort: 4000
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /etc/xroad
+          name: transito-server-conf
+        - mountPath: /var/lib/xroad
+          name: transito-server-data
+        - mountPath: /var/log/xroad
+          name: transito-server-logs
+        - mountPath: /var/lib/postgresql/data
+          name: transito-server-db
+      volumes:
+      - name: transito-server-conf
+        emptyDir: {}
+      - name: transito-server-data
+        emptyDir: {}
+      - name: transito-server-logs
+        emptyDir: {}
+      - name: transito-server-db
+        emptyDir: {}

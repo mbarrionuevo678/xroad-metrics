@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: dni-security-server
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: dni-security-server
+  template:
+    metadata:
+      labels:
+        app: dni-security-server
+    spec:
+      containers:
+      - name: dni-security-server
+        image: niis/xroad-security-server
+        ports:
+        - containerPort: 4000
+        - containerPort: 8080
+        volumeMounts:
+        - mountPath: /etc/xroad
+          name: dni-server-conf
+        - mountPath: /var/lib/xroad
+          name: dni-server-data
+        - mountPath: /var/log/xroad
+          name: dni-server-logs
+        - mountPath: /var/lib/postgresql/data
+          name: dni-server-db
+      volumes:
+      - name: dni-server-conf
+        emptyDir: {}
+      - name: dni-server-data
+        emptyDir: {}
+      - name: dni-server-logs
+        emptyDir: {}
+      - name: dni-server-db
+        emptyDir: {}
