@@ -13,29 +13,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up K8s
-      run: |
-        curl -LO "https://storage.googleapis.com/kubernetes-release/release/$(curl -s https://storage.googleapis.com/kubernetes-release/release/stable.txt)/bin/linux/amd64/kubectl"
-        chmod +x ./kubectl
-        sudo mv ./kubectl /usr/local/bin/kubectl
-
-    - name: Set up Minikube
-      run: |
-        curl -Lo minikube https://storage.googleapis.com/minikube/releases/latest/minikube-linux-amd64
-        chmod +x minikube
-        sudo install minikube /usr/local/bin/
-
-    - name: Start Minikube
-      run: |
-        minikube start --kubernetes-version=v1.20.0
-
     - name: Deploy to Minikube
       run: |
-        kubectl apply -f deployments/central-server-deployment.yaml
-        kubectl apply -f deployments/central-server-service.yaml
-        kubectl apply -f deployments/transito-security-server-deployment.yaml
-        kubectl apply -f deployments/transito-security-server-service.yaml
-        kubectl apply -f deployments/tecnologia-security-server-deployment.yaml
-        kubectl apply -f deployments/tecnologia-security-server-service.yaml
-        kubectl apply -f deployments/dni-security-server-deployment.yaml
-        kubectl apply -f deployments/dni-security-server-service.yaml
+        kubectl apply -f deployments/central-server-deployment.yaml -ns x-road
+        kubectl apply -f deployments/central-server-service.yaml -ns x-road
+        kubectl apply -f deployments/transito-security-server-deployment.yaml -ns x-road
+        kubectl apply -f deployments/transito-security-server-service.yaml -ns x-road
+        kubectl apply -f deployments/tecnologia-security-server-deployment.yaml -ns x-road
+        kubectl apply -f deployments/tecnologia-security-server-service.yaml -ns x-road
+        kubectl apply -f deployments/dni-security-server-deployment.yaml -ns x-road
+        kubectl apply -f deployments/dni-security-server-service.yaml -ns x-road
