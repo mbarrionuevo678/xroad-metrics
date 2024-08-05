@@ -15,11 +15,11 @@ jobs:
 
     - name: Deploy to Minikube
       run: |
-        kubectl apply -f deployments/central-server-deployment.yaml -ns x-road
-        kubectl apply -f deployments/central-server-service.yaml -ns x-road
-        kubectl apply -f deployments/transito-security-server-deployment.yaml -ns x-road
-        kubectl apply -f deployments/transito-security-server-service.yaml -ns x-road
-        kubectl apply -f deployments/tecnologia-security-server-deployment.yaml -ns x-road
-        kubectl apply -f deployments/tecnologia-security-server-service.yaml -ns x-road
-        kubectl apply -f deployments/dni-security-server-deployment.yaml -ns x-road
-        kubectl apply -f deployments/dni-security-server-service.yaml -ns x-road
+        kubectl apply -f deployments/central-server-deployment.yaml -n x-road
+        kubectl apply -f deployments/central-server-service.yaml -n x-road
+        kubectl apply -f deployments/transito-security-server-deployment.yaml -n x-road
+        kubectl apply -f deployments/transito-security-server-service.yaml -n x-road
+        kubectl apply -f deployments/tecnologia-security-server-deployment.yaml -n x-road
+        kubectl apply -f deployments/tecnologia-security-server-service.yaml -n x-road
+        kubectl apply -f deployments/dni-security-server-deployment.yaml -n x-road
+        kubectl apply -f deployments/dni-security-server-service.yaml -n x-road
