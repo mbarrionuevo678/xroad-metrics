@@ -13,13 +13,22 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Set up K8s
+      uses: azure/setup-kubectl@v1
+      with:
+        version: 'latest'
+
     - name: Deploy to Minikube
       run: |
-        kubectl apply -f /home/mbarrionuevo/transito/k8s-xroad/deployments/central-server-deployment.yaml -n x-road
-        kubectl apply -f /home/mbarrionuevo/transito/k8s-xroad/deployments/central-server-service.yaml -n x-road
-        kubectl apply -f /home/mbarrionuevo/transito/k8s-xroad/deployments/transito-security-server-deployment.yaml -n x-road
-        kubectl apply -f /home/mbarrionuevo/transito/k8s-xroad/deployments/transito-security-server-service.yaml -n x-road
-        kubectl apply -f /home/mbarrionuevo/transito/k8s-xroad/deployments/tecnologia-security-server-deployment.yaml -n x-road
-        kubectl apply -f /home/mbarrionuevo/transito/k8s-xroad/deployments/tecnologia-security-server-service.yaml -n x-road
-        kubectl apply -f /home/mbarrionuevo/transito/k8s-xroad/deployments/dni-security-server-deployment.yaml -n x-road
-        kubectl apply -f /home/mbarrionuevo/transito/k8s-xroad/deployments/dni-security-server-service.yaml -n x-road
+        kubectl create namespace x-road || true
+        kubectl create namespace monitoring || true
+        kubectl apply -f deployments/central-server-deployment.yaml -n x-road
+        kubectl apply -f deployments/central-server-service.yaml -n x-road
+        kubectl apply -f deployments/transito-security-server-deployment.yaml -n x-road
+        kubectl apply -f deployments/transito-security-server-service.yaml -n x-road
+        kubectl apply -f deployments/tecnologia-security-server-deployment.yaml -n x-road
+        kubectl apply -f deployments/tecnologia-security-server-service.yaml -n x-road
+        kubectl apply -f deployments/dni-security-server-deployment.yaml -n x-road
+        kubectl apply -f deployments/dni-security-server-service.yaml -n x-road
+        kubectl apply -f deployments/prometheus-deployment.yaml -n monitoring
+        kubectl apply -f deployments/grafana-deployment.yaml -n monitoring
